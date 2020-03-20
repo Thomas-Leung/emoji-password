@@ -6,7 +6,7 @@
         <v-icon size="14">mdi-checkbox-blank-circle</v-icon>
       </v-col>
     </v-row>
-    <v-container class="grey lighten-4" style="border-radius:15px">
+    <v-container :class="{'shakePin': shake}" class="grey lighten-4" style="border-radius:15px">
       <v-row v-for="i in 4" :key="i" no-gutters>
         <v-col v-for="j in 4" :key="j">
           <v-card height="8vh" outlined tile align="center">
@@ -25,7 +25,7 @@
 
       <v-row align="center" justify="space-between">
         <v-col class="pb-0 pt-1" cols="auto">
-          <v-btn text class="caption" @click="reset">
+          <v-btn text class="caption" @click="reset" :disabled="unlock">
             <v-icon size="16">mdi-lock-reset</v-icon>Reset
           </v-btn>
         </v-col>
@@ -35,7 +35,7 @@
           </v-btn>
         </v-col>
         <v-col class="pb-0 pt-1" cols="auto">
-          <v-btn text class="caption" @click="login">
+          <v-btn text class="caption" @click="login" :disabled="unlock">
             Login
             <v-icon size="16">mdi-lock-check</v-icon>
           </v-btn>
@@ -52,6 +52,9 @@
 <script>
 import emojiPwd from "@/components/data/emojiPwd.json";
 export default {
+  props: {
+    unlock: Boolean
+  },
   data: function() {
     return {
       emoji: emojiPwd["page1"],
@@ -59,8 +62,9 @@ export default {
       passcode: "",
       tempPwd: "1234",
       snackbar: false,
-      snackbarText: "sasd",
+      snackbarText: "",
       snackbarColor: "success",
+      shake: false
     };
   },
   methods: {
@@ -78,22 +82,51 @@ export default {
     },
     reset() {
       this.passcode = "";
+      this.shake = false;
     },
     login() {
       if (this.passcode == this.tempPwd) {
         this.snackbarColor = "success";
-        this.snackbarText = "Correct Passcode";
+        this.snackbarText =
+          "Correct Passcode~ Click the unlock icon to lock again.";
+        this.$emit("unlock", true);
       } else {
         this.snackbarColor = "error";
         this.snackbarText = "Wrong Passcode, try again.";
+        this.shake = true;
       }
       this.snackbar = true;
-      this.passcode = "";
+      var that = this;
+      setTimeout(function() {
+        that.reset();
+      }, 500);
     }
   }
 };
 </script>
 
 <style scoped>
-
+.shakePin {
+  animation: shake 0.5s linear;
+}
+@keyframes shake {
+  8%,
+  41% {
+    -webkit-transform: translateX(-10px);
+  }
+  25%,
+  58% {
+    -webkit-transform: translateX(10px);
+  }
+  75% {
+    -webkit-transform: translateX(-5px);
+  }
+  92% {
+    -webkit-transform: translateX(5px);
+  }
+  0%,
+  100% {
+    -webkit-transform: translateX(0);
+  }
+}
 </style>
