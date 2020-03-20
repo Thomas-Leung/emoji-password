@@ -12,7 +12,7 @@
       </v-col>
     </v-row>
     <v-row class="text-center">
-      <v-col class="mb-n12 pt-10">
+      <v-col class="mb-n12 pt-2">
         <p class="caption font-weight-regular">Enter passcode</p>
       </v-col>
     </v-row>
