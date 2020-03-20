@@ -1,10 +1,17 @@
 <template>
-  <v-sheet class="pa-12">
+  <v-sheet class="pa-4">
     <v-container class="grey lighten-5" style="border-radius:15px">
       <v-row v-for="i in 4" :key="i" no-gutters>
         <v-col v-for="j in 4" :key="j">
-          <v-card class="pa-3" outlined tile align="center">
-              {{i*j}}
+          <v-card height="8vh" outlined tile align="center">
+            <v-btn
+              class="display-1"
+              ripple="true"
+              tile
+              text
+              width="100%"
+              height="100%"
+            >{{emoji[i == 1? i * j : 4*(i-1) + j]}}</v-btn>
             <!-- <p class="display-1 mb-0">{{emoji[i * j]}}</p> -->
           </v-card>
         </v-col>
@@ -17,11 +24,32 @@
 export default {
   data: function() {
     return {
-        emoji: ["", "😀", "😆"]
+      emoji: [
+        "",
+        "😀",
+        "😆",
+        "😅",
+        "😂",
+        "🤣",
+        "😇",
+        "🙃",
+        "😉",
+        "😋",
+        "😝",
+        "🧐",
+        "🤓",
+        "🥳",
+        "😏",
+        "🥺",
+        "😭"
+      ]
     };
   }
 };
 </script>
 
-<style>
+<style scoped>
+.v-btn {
+  min-width: 0;
+}
 </style>
