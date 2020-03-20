@@ -1,0 +1,142 @@
+{
+    "page1": [
+        {
+            "emoji": "",
+            "symbol": ""
+        },
+        {
+            "emoji": "😀",
+            "symbol": "1"
+        },
+        {
+            "emoji": "😆",
+            "symbol": "2"
+        },
+        {
+            "emoji": "😅",
+            "symbol": "3"
+        },
+        {
+            "emoji": "😂",
+            "symbol": "4"
+        },
+        {
+            "emoji": "🤣",
+            "symbol": "5"
+        },
+        {
+            "emoji": "😇",
+            "symbol": "6"
+        },
+        {
+            "emoji": "🙃",
+            "symbol": "7"
+        },
+        {
+            "emoji": "😉",
+            "symbol": "8"
+        },
+        {
+            "emoji": "😋",
+            "symbol": "9"
+        },
+        {
+            "emoji": "😝",
+            "symbol": "0"
+        },
+        {
+            "emoji": "🧐",
+            "symbol": "q"
+        },
+        {
+            "emoji": "🤓",
+            "symbol": "w"
+        },
+        {
+            "emoji": "🥳",
+            "symbol": "e"
+        },
+        {
+            "emoji": "😏",
+            "symbol": "r"
+        },
+        {
+            "emoji": "🥺",
+            "symbol": "t"
+        },
+        {
+            "emoji": "😢",
+            "symbol": "y"
+        }
+    ],
+    "page2": [
+        {
+            "emoji": "",
+            "symbol": ""
+        },
+        {
+            "emoji": "😭",
+            "symbol": "!"
+        },
+        {
+            "emoji": "😤",
+            "symbol": "@"
+        },
+        {
+            "emoji": "😠",
+            "symbol": "#"
+        },
+        {
+            "emoji": "😰",
+            "symbol": "$"
+        },
+        {
+            "emoji": "😓",
+            "symbol": "%"
+        },
+        {
+            "emoji": "🤔",
+            "symbol": "^"
+        },
+        {
+            "emoji": "🤭",
+            "symbol": "&"
+        },
+        {
+            "emoji": "🤥",
+            "symbol": "*"
+        },
+        {
+            "emoji": "😶",
+            "symbol": "("
+        },
+        {
+            "emoji": "😬",
+            "symbol": ")"
+        },
+        {
+            "emoji": "🙄",
+            "symbol": "Q"
+        },
+        {
+            "emoji": "😦",
+            "symbol": "W"
+        },
+        {
+            "emoji": "😴",
+            "symbol": "E"
+        },
+        {
+            "emoji": "🤤",
+            "symbol": "R"
+        },
+        {
+            "emoji": "😵",
+            "symbol": "T"
+        },
+        {
+            "emoji": "😷",
+            "symbol": "Y"
+        }
+    ]
+}

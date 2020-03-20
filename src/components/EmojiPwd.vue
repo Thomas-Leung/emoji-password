@@ -11,17 +11,13 @@
               text
               width="100%"
               height="100%"
-            >{{emoji[i == 1? i * j : 4*(i-1) + j]}}</v-btn>
+            >{{emoji[i == 1? i * j : 4*(i-1) + j].emoji}}</v-btn>
             <!-- <p class="display-1 mb-0">{{emoji[i * j]}}</p> -->
           </v-card>
         </v-col>
       </v-row>
+
       <v-row align="center" justify="space-between">
-        <v-col class="pb-0 pt-1" cols="auto">
-          <v-btn text>
-            <v-icon>mdi-chevron-left</v-icon>
-          </v-btn>
-        </v-col>
          <v-col class="pb-0 pt-1" cols="auto">
           <v-btn text class="caption">
             <v-icon size="16">mdi-lock-reset</v-icon>
@@ -29,8 +25,8 @@
           </v-btn>
         </v-col>
         <v-col class="pb-0 pt-1" cols="auto">
-          <v-btn text>
-            <v-icon>mdi-chevron-right</v-icon>
+          <v-btn text @click="switchEmoji">
+            <v-icon>{{arrow}}</v-icon>
           </v-btn>
         </v-col>
       </v-row>
@@ -39,29 +35,24 @@
 </template>
 
 <script>
+import emojiPwd from "@/components/data/emojiPwd.json"
 export default {
   data: function() {
     return {
-      emoji: [
-        "",
-        "😀",
-        "😆",
-        "😅",
-        "😂",
-        "🤣",
-        "😇",
-        "🙃",
-        "😉",
-        "😋",
-        "😝",
-        "🧐",
-        "🤓",
-        "🥳",
-        "😏",
-        "🥺",
-        "😭"
-      ]
+      emoji: emojiPwd["page1"],
+      arrow: "mdi-chevron-down"
     };
+  },
+  methods: {
+    switchEmoji: function() {
+      if (this.arrow === "mdi-chevron-down") {
+        this.emoji = emojiPwd["page2"]
+        this.arrow = "mdi-chevron-up"
+      } else {
+        this.emoji = emojiPwd["page1"]
+        this.arrow = "mdi-chevron-down"
+      }
+    }
   }
 };
 </script>
