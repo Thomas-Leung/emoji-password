@@ -14,7 +14,7 @@
         <v-divider></v-divider>
         <v-stepper-step :complete="page > 2" step="2">Banking</v-stepper-step>
         <v-divider></v-divider>
-        <v-stepper-step step="3">Unlock Mobile</v-stepper-step>
+        <v-stepper-step step="3">Unlock Phone</v-stepper-step>
       </v-stepper-header>
 
       <v-stepper-items class="pa-n8">
@@ -137,12 +137,15 @@ export default {
       snackbar: false,
       snackbarText: "",
       snackbarColor: "",
-      logs: ["line1", "line2"]
+      logs: [],
+      scheme: ["Email", "Banking", "Phone"],
+      userId: ""
     };
   },
   methods: {
     nextPage(nextPgNo) {
       if (this.unlock === true) {
+        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", CREATE, Login successful");
         this.hidePwd = false; //reset value to false
         this.unlock = false; //reset value to false
         this.page = nextPgNo;
@@ -151,18 +154,29 @@ export default {
         this.snackbarText =
           "You need to successfully enter the password to continue.";
         this.snackbar = true;
+        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", CREATE, Login failed");
       }
     },
+
     navEmailTest() {
-      this.$router.push({
-        name: "EmailTest",
-        params: {
+      if (this.unlock === true) {
+        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", CREATE, Login successful");
+        this.$router.push({
+          name: "EmailTest",
+                  params: {
           logData: this.logs,
           emailPass: this.emailPass,
           bankPass: this.bankPass,
           phonePass: this.phonePass
         }
-      });
+        });
+      } else {
+        this.snackbarColor = "info";
+        this.snackbarText =
+          "You need to successfully enter the password to continue.";
+        this.snackbar = true;
+        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", CREATE, Login failed");
+      }
     },
     logging() {
       let logData = `[${new Date().toISOString()}] UserAgentHeader: ${
@@ -172,6 +186,7 @@ export default {
     },
     getUnlockValue(value) {
       this.unlock = value;
+      console.log(value);
     },
     generateRandomPwd(object) {
       let generatedPwd = "";
@@ -188,14 +203,22 @@ export default {
       }
       object.generatedPwd = generatedPwd;
       object.displayPwd = displayPwd;
-      console.log(displayPwd);
+    },
+    randId() {
+     return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
+
     }
   },
   created() {
+    this.userId = this.randId();
     this.generateRandomPwd(this.emailPass);
     this.generateRandomPwd(this.bankPass);
+
     this.generateRandomPwd(this.phonePass);
-    this.logging();
+    this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + "Email, CREATE, Login password created");
+    this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + "Banking, CREATE, Login password created");
+    this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + "Phone, CREATE, Login password created");
+    //this.logging();
   }
 };
 </script>
