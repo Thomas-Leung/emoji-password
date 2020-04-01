@@ -142,7 +142,7 @@ export default {
       snackbarText: "",
       snackbarColor: "",
       logs: [],
-      scheme: ["Email", "Banking", "Shopping"],
+      scheme: ["Email", "Banking", "Phone"],
       userId: ""
     };
   },
@@ -162,12 +162,21 @@ export default {
       }
     },
     navTest() {
-      this.$router.push({
-        name: "EmailTest",
-        params: {
-          logData: this.logs
-        }
-      });
+      if (this.unlock === true) {
+        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", TEST, Login successful");
+        this.$router.push({
+          name: "EmailTest",
+          params: {
+            logData: this.logs
+          }
+        });
+      } else {
+        this.snackbarColor = "info";
+        this.snackbarText =
+          "You need to successfully enter the password to continue.";
+        this.snackbar = true;
+        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", TEST, Login failed");
+      }
     },
     logging() {
       let logData = `[${new Date().toISOString()}] UserAgentHeader: ${
@@ -208,7 +217,7 @@ export default {
     this.generateRandomPwd(this.mobilePass);
     this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + "Email, TEST, Login password created");
     this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + "Banking, TEST, Login password created");
-    this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + "Shopping, TEST, Login password created");
+    this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + "Phone, TEST, Login password created");
     //this.logging();
   }
 };
