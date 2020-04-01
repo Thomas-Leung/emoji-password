@@ -141,12 +141,15 @@ export default {
       snackbar: false,
       snackbarText: "",
       snackbarColor: "",
-      logs: ["line1", "line2"]
+      logs: [],
+      scheme: ["Email", "Banking", "Phone"],
+      userId: ""
     };
   },
   methods: {
     nextPage(nextPgNo) {
       if (this.unlock === true) {
+        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", CREATE, Login successful");
         this.hidePwd = false; //reset value to false
         this.unlock = false; //reset value to false
         this.page = nextPgNo;
@@ -155,15 +158,25 @@ export default {
         this.snackbarText =
           "You need to successfully enter the password to continue.";
         this.snackbar = true;
+        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", CREATE, Login failed");
       }
     },
     navTest() {
-      this.$router.push({
-        name: "EmailTest",
-        params: {
-          logData: this.logs
-        }
-      });
+      if (this.unlock === true) {
+        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", CREATE, Login successful");
+        this.$router.push({
+          name: "EmailTest",
+          params: {
+            logData: this.logs
+          }
+        });
+      } else {
+        this.snackbarColor = "info";
+        this.snackbarText =
+          "You need to successfully enter the password to continue.";
+        this.snackbar = true;
+        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", CREATE, Login failed");
+      }
     },
     logging() {
       let logData = `[${new Date().toISOString()}] UserAgentHeader: ${
@@ -173,6 +186,7 @@ export default {
     },
     getUnlockValue(value) {
       this.unlock = value;
+      console.log(value);
     },
     generateRandomPwd(object) {
       let generatedPwd = "";
@@ -189,14 +203,22 @@ export default {
       }
       object.generatedPwd = generatedPwd;
       object.displayPwd = displayPwd;
-      console.log(displayPwd);
+    },
+    randId() {
+     return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
+
     }
   },
   created() {
+    this.userId = this.randId();
     this.generateRandomPwd(this.emailPass);
     this.generateRandomPwd(this.bankPass);
+
     this.generateRandomPwd(this.mobilePass);
-    this.logging();
+    this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + "Email, CREATE, Login password created");
+    this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + "Banking, CREATE, Login password created");
+    this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + "Phone, CREATE, Login password created");
+    //this.logging();
   }
 };
 </script>
