@@ -149,7 +149,7 @@ export default {
   methods: {
     nextPage(nextPgNo) {
       if (this.unlock === true) {
-        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", TEST, Login successful");
+        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", CREATE, Login successful");
         this.hidePwd = false; //reset value to false
         this.unlock = false; //reset value to false
         this.page = nextPgNo;
@@ -158,12 +158,12 @@ export default {
         this.snackbarText =
           "You need to successfully enter the password to continue.";
         this.snackbar = true;
-        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", TEST, Login failed");
+        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", CREATE, Login failed");
       }
     },
     navTest() {
       if (this.unlock === true) {
-        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", TEST, Login successful");
+        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", CREATE, Login successful");
         this.$router.push({
           name: "EmailTest",
           params: {
@@ -175,7 +175,7 @@ export default {
         this.snackbarText =
           "You need to successfully enter the password to continue.";
         this.snackbar = true;
-        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", TEST, Login failed");
+        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", CREATE, Login failed");
       }
     },
     logging() {
@@ -215,9 +215,9 @@ export default {
     this.generateRandomPwd(this.bankPass);
 
     this.generateRandomPwd(this.mobilePass);
-    this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + "Email, TEST, Login password created");
-    this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + "Banking, TEST, Login password created");
-    this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + "Phone, TEST, Login password created");
+    this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + "Email, CREATE, Login password created");
+    this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + "Banking, CREATE, Login password created");
+    this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + "Phone, CREATE, Login password created");
     //this.logging();
   }
 };
