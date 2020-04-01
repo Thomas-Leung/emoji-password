@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 import CreatePwd from '../views/CreatePwd.vue'
-import Test1 from '../views/Test1.vue'
+import EmailTest from '../views/EmailTest.vue'
+import BankTest from '../views/BankTest.vue'
+import MobileTest from '../views/MobileTest.vue'
 
 Vue.use(VueRouter)
 
@@ -12,15 +13,22 @@ const routes = [{
     component: CreatePwd
   },
   {
-    path: '/test1',
-    name: 'Test1',
-    component: Test1,
+    path: '/emailTest',
+    name: 'EmailTest',
+    component: EmailTest,
     props: true
   },
   {
-    path: '/home',
-    name: 'Home',
-    component: Home
+    path: '/bankTest',
+    name: 'BankTest',
+    component: BankTest,
+    props: true
+  },
+  {
+    path: '/mobileTest',
+    name: 'MobileTest',
+    component: MobileTest,
+    props: true
   },
   {
     path: '/about',

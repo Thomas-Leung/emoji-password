@@ -1,12 +1,13 @@
 <template>
-  <div>LogData {{logData}}</div>
+  <h1>This is bank test</h1>
 </template>
 
 <script>
 export default {
-  props: { logData: Array }
-};
+
+}
 </script>
 
 <style>
+
 </style>

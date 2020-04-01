@@ -14,7 +14,7 @@
         <v-divider></v-divider>
         <v-stepper-step :complete="page > 2" step="2">Banking</v-stepper-step>
         <v-divider></v-divider>
-        <v-stepper-step step="3">Shopping</v-stepper-step>
+        <v-stepper-step step="3">Unlock Mobile</v-stepper-step>
       </v-stepper-header>
 
       <v-stepper-items class="pa-n8">
@@ -66,10 +66,10 @@
 
         <v-stepper-content step="3">
           <v-sheet>
-            <h1 class="title font-weight-medium">Step 3: New password for Shopping:</h1>
+            <h1 class="title font-weight-medium">Step 3: New password for unlock your phone:</h1>
             <h1 class="headline font-weight-medium">
               You password is:
-              <span v-if="!hidePwd">{{shoppingPass.displayPwd}}</span>
+              <span v-if="!hidePwd">{{mobilePass.displayPwd}}</span>
             </h1>
             <v-switch
               inset
@@ -81,7 +81,7 @@
               hide-details
             ></v-switch>
           </v-sheet>
-          <EmojiPwd :randPwd="shoppingPass.generatedPwd" @unlock="getUnlockValue" />
+          <EmojiPwd :randPwd="mobilePass.generatedPwd" @unlock="getUnlockValue" />
           <v-sheet height="2vh"></v-sheet>
           <v-btn color="primary" @click="navTest()">Start Testing</v-btn>
           <v-btn text @click="bottomSheet = !bottomSheet">Check Log</v-btn>
@@ -131,7 +131,7 @@ export default {
         displayPwd: "" // the emoji of emojiPwd
       },
 
-      shoppingPass: {
+      mobilePass: {
         generatedPwd: "", // the symbol (character) of emojiPwd
         displayPwd: "" // the emoji of emojiPwd
       },
@@ -146,8 +146,7 @@ export default {
   },
   methods: {
     nextPage(nextPgNo) {
-      // if (this.unlock === true) {
-      if (this.unlock === false) {
+      if (this.unlock === true) {
         this.hidePwd = false; //reset value to false
         this.unlock = false; //reset value to false
         this.page = nextPgNo;
@@ -160,7 +159,7 @@ export default {
     },
     navTest() {
       this.$router.push({
-        name: "Test1",
+        name: "EmailTest",
         params: {
           logData: this.logs
         }
@@ -182,7 +181,7 @@ export default {
       // prettier-ignore
       const emoji = ["😀", "😆", "😅", "😂", "🤣", "😇", "🙃", "😉", "😋", "😝", "🧐", "🤓", "🥳", "😏", "🥺", "😢", "😭", "😤", "😠", "😰", "😓", "🤔", "🤭", "🤥", "😶", "😬", "🙄", "😦", "😴", "🤤", "😵", "😷" ];
       const charactersLength = characters.length;
-      const pwdLength = 5;
+      const pwdLength = 1;
       for (let i = 0; i < pwdLength; i++) {
         let randomNum = Math.floor(Math.random() * charactersLength);
         generatedPwd += characters.charAt(randomNum);
@@ -190,12 +189,13 @@ export default {
       }
       object.generatedPwd = generatedPwd;
       object.displayPwd = displayPwd;
+      console.log(displayPwd);
     }
   },
   created() {
     this.generateRandomPwd(this.emailPass);
     this.generateRandomPwd(this.bankPass);
-    this.generateRandomPwd(this.shoppingPass);
+    this.generateRandomPwd(this.mobilePass);
     this.logging();
   }
 };
