@@ -42,7 +42,7 @@
         </v-stepper-content>
 
         <v-stepper-content step="2">
-           <v-sheet>
+          <v-sheet>
             <h1 class="title font-weight-medium">Step 2: New password for Banking:</h1>
             <h1 class="headline font-weight-medium">
               You password is:
@@ -83,7 +83,7 @@
           </v-sheet>
           <EmojiPwd :randPwd="shoppingPass.generatedPwd" @unlock="getUnlockValue" />
           <v-sheet height="2vh"></v-sheet>
-          <v-btn color="primary" @click="nextPage(1)">Next</v-btn>
+          <v-btn color="primary" @click="navTest()">Start Testing</v-btn>
           <v-btn text @click="bottomSheet = !bottomSheet">Check Log</v-btn>
         </v-stepper-content>
       </v-stepper-items>
@@ -123,19 +123,19 @@ export default {
 
       emailPass: {
         generatedPwd: "", // the symbol (character) of emojiPwd
-        displayPwd: "", // the emoji of emojiPwd
+        displayPwd: "" // the emoji of emojiPwd
       },
 
       bankPass: {
         generatedPwd: "", // the symbol (character) of emojiPwd
-        displayPwd: "", // the emoji of emojiPwd
+        displayPwd: "" // the emoji of emojiPwd
       },
 
       shoppingPass: {
         generatedPwd: "", // the symbol (character) of emojiPwd
-        displayPwd: "", // the emoji of emojiPwd
+        displayPwd: "" // the emoji of emojiPwd
       },
-      
+
       bottomSheet: false,
       unlock: false,
       snackbar: false,
@@ -146,7 +146,8 @@ export default {
   },
   methods: {
     nextPage(nextPgNo) {
-      if (this.unlock === true) {
+      // if (this.unlock === true) {
+      if (this.unlock === false) {
         this.hidePwd = false; //reset value to false
         this.unlock = false; //reset value to false
         this.page = nextPgNo;
@@ -156,13 +157,19 @@ export default {
           "You need to successfully enter the password to continue.";
         this.snackbar = true;
       }
-      console.log(nextPgNo);
+    },
+    navTest() {
+      this.$router.push({
+        name: "Test1",
+        params: {
+          logData: this.logs
+        }
+      });
     },
     logging() {
       let logData = `[${new Date().toISOString()}] UserAgentHeader: ${
         navigator.userAgent
       }`;
-      console.log(logData);
       this.logs.push(logData);
     },
     getUnlockValue(value) {
