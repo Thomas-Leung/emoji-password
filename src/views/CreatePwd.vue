@@ -14,16 +14,16 @@
         <v-divider></v-divider>
         <v-stepper-step :complete="page > 2" step="2">Banking</v-stepper-step>
         <v-divider></v-divider>
-        <v-stepper-step step="3">Unlock Phone</v-stepper-step>
+        <v-stepper-step step="3">Shopping</v-stepper-step>
       </v-stepper-header>
 
       <v-stepper-items class="pa-n8">
         <v-stepper-content step="1">
           <v-sheet>
-            <h1 class="title font-weight-medium">Step 1 new password for email:</h1>
+            <h1 class="title font-weight-medium">Step 1: New password for Email:</h1>
             <h1 class="headline font-weight-medium">
               You password is:
-              <span v-if="!hidePwd">{{displayPwd}}</span>
+              <span v-if="!hidePwd">{{emailPass.displayPwd}}</span>
             </h1>
             <v-switch
               inset
@@ -35,26 +35,56 @@
               hide-details
             ></v-switch>
           </v-sheet>
-          <EmojiPwd :randPwd="generatedPwd" @unlock="getUnlockValue" />
+          <EmojiPwd :randPwd="emailPass.generatedPwd" @unlock="getUnlockValue" />
           <v-sheet height="2vh"></v-sheet>
           <v-btn color="primary" @click="nextPage(2)">Next</v-btn>
           <v-btn text @click="bottomSheet = !bottomSheet">Check Log</v-btn>
         </v-stepper-content>
 
         <v-stepper-content step="2">
-          <v-card class="mb-12" color="grey lighten-1" height="200px"></v-card>
-
-          <v-btn color="primary" @click="page = 3">Continue</v-btn>
-
-          <v-btn text>Cancel</v-btn>
+           <v-sheet>
+            <h1 class="title font-weight-medium">Step 2: New password for Banking:</h1>
+            <h1 class="headline font-weight-medium">
+              You password is:
+              <span v-if="!hidePwd">{{bankPass.displayPwd}}</span>
+            </h1>
+            <v-switch
+              inset
+              dense
+              :ripple="false"
+              v-model="hidePwd"
+              :label="`Hide password: ${hidePwd.toString()}`"
+              class="ma-0 ml-1"
+              hide-details
+            ></v-switch>
+          </v-sheet>
+          <EmojiPwd :randPwd="bankPass.generatedPwd" @unlock="getUnlockValue" />
+          <v-sheet height="2vh"></v-sheet>
+          <v-btn color="primary" @click="nextPage(3)">Next</v-btn>
+          <v-btn text @click="bottomSheet = !bottomSheet">Check Log</v-btn>
         </v-stepper-content>
 
         <v-stepper-content step="3">
-          <v-card class="mb-12" color="grey lighten-1" height="200px"></v-card>
-
-          <v-btn color="primary" @click="page = 1">Continue</v-btn>
-
-          <v-btn text>Cancel</v-btn>
+          <v-sheet>
+            <h1 class="title font-weight-medium">Step 3: New password for Shopping:</h1>
+            <h1 class="headline font-weight-medium">
+              You password is:
+              <span v-if="!hidePwd">{{shoppingPass.displayPwd}}</span>
+            </h1>
+            <v-switch
+              inset
+              dense
+              :ripple="false"
+              v-model="hidePwd"
+              :label="`Hide password: ${hidePwd.toString()}`"
+              class="ma-0 ml-1"
+              hide-details
+            ></v-switch>
+          </v-sheet>
+          <EmojiPwd :randPwd="shoppingPass.generatedPwd" @unlock="getUnlockValue" />
+          <v-sheet height="2vh"></v-sheet>
+          <v-btn color="primary" @click="nextPage(1)">Next</v-btn>
+          <v-btn text @click="bottomSheet = !bottomSheet">Check Log</v-btn>
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
@@ -90,8 +120,22 @@ export default {
     return {
       page: 1,
       hidePwd: false,
-      generatedPwd: "", // the symbol (character) of emojiPwd
-      displayPwd: "", // the emoji of emojiPwd
+
+      emailPass: {
+        generatedPwd: "", // the symbol (character) of emojiPwd
+        displayPwd: "", // the emoji of emojiPwd
+      },
+
+      bankPass: {
+        generatedPwd: "", // the symbol (character) of emojiPwd
+        displayPwd: "", // the emoji of emojiPwd
+      },
+
+      shoppingPass: {
+        generatedPwd: "", // the symbol (character) of emojiPwd
+        displayPwd: "", // the emoji of emojiPwd
+      },
+      
       bottomSheet: false,
       unlock: false,
       snackbar: false,
@@ -103,6 +147,8 @@ export default {
   methods: {
     nextPage(nextPgNo) {
       if (this.unlock === true) {
+        this.hidePwd = false; //reset value to false
+        this.unlock = false; //reset value to false
         this.page = nextPgNo;
       } else {
         this.snackbarColor = "info";
@@ -122,7 +168,7 @@ export default {
     getUnlockValue(value) {
       this.unlock = value;
     },
-    generateRandomPwd() {
+    generateRandomPwd(object) {
       let generatedPwd = "";
       let displayPwd = "";
       const characters = "1234567890qwerty!@#$%^&*()QWERTY";
@@ -135,12 +181,14 @@ export default {
         generatedPwd += characters.charAt(randomNum);
         displayPwd += emoji[randomNum];
       }
-      this.generatedPwd = generatedPwd;
-      this.displayPwd = displayPwd;
+      object.generatedPwd = generatedPwd;
+      object.displayPwd = displayPwd;
     }
   },
   created() {
-    this.generateRandomPwd();
+    this.generateRandomPwd(this.emailPass);
+    this.generateRandomPwd(this.bankPass);
+    this.generateRandomPwd(this.shoppingPass);
     this.logging();
   }
 };

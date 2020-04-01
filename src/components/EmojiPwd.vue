@@ -3,7 +3,7 @@
     <v-row align="center" justify="center">
       <v-col v-if="passcode.length === 0" class="mb-4" cols="auto"></v-col>
       <v-col class="pl-1 pr-1 pt-1" cols="auto" v-for="i in passcode.length" :key="i">
-        <v-icon size="14">mdi-checkbox-blank-circle</v-icon>
+        <v-icon size="20">mdi-checkbox-blank-circle</v-icon>
       </v-col>
     </v-row>
     <v-container :class="{'shakePin': shake}" class="grey lighten-4" style="border-radius:15px">
