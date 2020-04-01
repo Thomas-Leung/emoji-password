@@ -66,10 +66,10 @@
 
         <v-stepper-content step="3">
           <v-sheet>
-            <h1 class="title font-weight-medium">Step 3: New password for unlock your phone:</h1>
+            <h1 class="title font-weight-medium">Step 3: New password for phone:</h1>
             <h1 class="headline font-weight-medium">
               You password is:
-              <span v-if="!hidePwd">{{mobilePass.displayPwd}}</span>
+              <span v-if="!hidePwd">{{phonePass.displayPwd}}</span>
             </h1>
             <v-switch
               inset
@@ -81,9 +81,9 @@
               hide-details
             ></v-switch>
           </v-sheet>
-          <EmojiPwd :randPwd="mobilePass.generatedPwd" @unlock="getUnlockValue" />
+          <EmojiPwd :randPwd="phonePass.generatedPwd" @unlock="getUnlockValue" />
           <v-sheet height="2vh"></v-sheet>
-          <v-btn color="primary" @click="navTest()">Start Testing</v-btn>
+          <v-btn color="primary" @click="navEmailTest()">Start Testing</v-btn>
           <v-btn text @click="bottomSheet = !bottomSheet">Check Log</v-btn>
         </v-stepper-content>
       </v-stepper-items>
@@ -120,22 +120,18 @@ export default {
     return {
       page: 1,
       hidePwd: false,
-
       emailPass: {
         generatedPwd: "", // the symbol (character) of emojiPwd
         displayPwd: "" // the emoji of emojiPwd
       },
-
       bankPass: {
         generatedPwd: "", // the symbol (character) of emojiPwd
         displayPwd: "" // the emoji of emojiPwd
       },
-
-      mobilePass: {
+      phonePass: {
         generatedPwd: "", // the symbol (character) of emojiPwd
         displayPwd: "" // the emoji of emojiPwd
       },
-
       bottomSheet: false,
       unlock: false,
       snackbar: false,
@@ -157,11 +153,14 @@ export default {
         this.snackbar = true;
       }
     },
-    navTest() {
+    navEmailTest() {
       this.$router.push({
         name: "EmailTest",
         params: {
-          logData: this.logs
+          logData: this.logs,
+          emailPass: this.emailPass,
+          bankPass: this.bankPass,
+          phonePass: this.phonePass
         }
       });
     },
@@ -195,7 +194,7 @@ export default {
   created() {
     this.generateRandomPwd(this.emailPass);
     this.generateRandomPwd(this.bankPass);
-    this.generateRandomPwd(this.mobilePass);
+    this.generateRandomPwd(this.phonePass);
     this.logging();
   }
 };
