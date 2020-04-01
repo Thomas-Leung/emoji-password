@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import CreatePwd from '../views/CreatePwd.vue'
 import EmailTest from '../views/EmailTest.vue'
 import BankTest from '../views/BankTest.vue'
-import MobileTest from '../views/MobileTest.vue'
+import PhoneTest from '../views/PhoneTest.vue'
 
 Vue.use(VueRouter)
 
@@ -25,9 +25,9 @@ const routes = [{
     props: true
   },
   {
-    path: '/mobileTest',
-    name: 'MobileTest',
-    component: MobileTest,
+    path: '/phoneTest',
+    name: 'PhoneTest',
+    component: PhoneTest,
     props: true
   },
   {
