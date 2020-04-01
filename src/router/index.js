@@ -1,12 +1,18 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import CreatePwd from '../views/CreatePwd.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
+    name: 'CreatePwd',
+    component: CreatePwd
+  },
+  {
+    path: '/home',
     name: 'Home',
     component: Home
   },

@@ -1,7 +1,9 @@
 <template>
   <div class="home">
     <Clock :unlock="unlock" @unlock="lock" />
-    <EmojiPwd :unlock="unlock" @unlock="getUnlockValue" />
+    <v-sheet class="pa-4">
+      <EmojiPwd :unlock="unlock" @unlock="getUnlockValue" />
+    </v-sheet>
   </div>
 </template>
 

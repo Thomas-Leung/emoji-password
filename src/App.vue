@@ -37,7 +37,8 @@ export default {
     return {
       drawer: null,
       items: [
-        { title: "test1", icon: "mdi-test-tube", to: "/" },
+        { title: "Create Password", icon: "mdi-pencil", to: "/"},
+        { title: "test1", icon: "mdi-test-tube", to: "/home" },
         { title: "About", icon: "mdi-information-outline", to: "/about" }
       ]
     };

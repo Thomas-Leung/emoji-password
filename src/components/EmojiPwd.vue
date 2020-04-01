@@ -1,5 +1,5 @@
 <template>
-  <v-sheet class="pa-4">
+  <v-sheet>
     <v-row align="center" justify="center">
       <v-col v-if="passcode.length === 0" class="mb-4" cols="auto"></v-col>
       <v-col class="pl-1 pr-1 pt-1" cols="auto" v-for="i in passcode.length" :key="i">
@@ -53,14 +53,14 @@
 import emojiPwd from "@/components/data/emojiPwd.json";
 export default {
   props: {
-    unlock: Boolean
+    unlock: Boolean,
+    randPwd: String
   },
   data: function() {
     return {
       emoji: emojiPwd["page1"],
       arrow: "mdi-chevron-down",
       passcode: "",
-      tempPwd: "1234",
       snackbar: false,
       snackbarText: "",
       snackbarColor: "success",
@@ -85,10 +85,9 @@ export default {
       this.shake = false;
     },
     login() {
-      if (this.passcode == this.tempPwd) {
+      if (this.passcode == this.randPwd) {
         this.snackbarColor = "success";
-        this.snackbarText =
-          "Correct Passcode~ Click the unlock icon to lock again.";
+        this.snackbarText = "Correct Passcode~"; // Click the unlock icon to lock again.
         this.$emit("unlock", true);
       } else {
         this.snackbarColor = "error";
