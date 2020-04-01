@@ -35,10 +35,10 @@
               hide-details
             ></v-switch>
           </v-sheet>
-          <EmojiPwd :randPwd="generatedPwd" />
+          <EmojiPwd :randPwd="generatedPwd" @unlock="getUnlockValue" />
           <v-sheet height="2vh"></v-sheet>
-          <v-btn color="primary" @click="page = 2">Next</v-btn>
-          <v-btn text>Check Log</v-btn>
+          <v-btn color="primary" @click="nextPage(2)">Next</v-btn>
+          <v-btn text @click="bottomSheet = !bottomSheet">Check Log</v-btn>
         </v-stepper-content>
 
         <v-stepper-content step="2">
@@ -58,6 +58,24 @@
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
+
+    <v-bottom-sheet v-model="bottomSheet" inset :scrollable="true">
+      <v-card height="350px">
+        <v-card-title>
+          <span class="title">Log Data:</span>
+        </v-card-title>
+        <v-card-text>
+          <ul id="log-data">
+            <li v-for="(log, index) in logs" :key="index">{{log}}</li>
+          </ul>
+        </v-card-text>
+      </v-card>
+    </v-bottom-sheet>
+
+    <v-snackbar :color="snackbarColor" v-model="snackbar">
+      {{ snackbarText }}
+      <v-btn text @click="snackbar = false">Close</v-btn>
+    </v-snackbar>
   </div>
 </template>
 
@@ -73,56 +91,57 @@ export default {
       page: 1,
       hidePwd: false,
       generatedPwd: "", // the symbol (character) of emojiPwd
-      displayPwd: "" // the emoji of emojiPwd
+      displayPwd: "", // the emoji of emojiPwd
+      bottomSheet: false,
+      unlock: false,
+      snackbar: false,
+      snackbarText: "",
+      snackbarColor: "",
+      logs: ["line1", "line2"]
     };
   },
-  created() {
-    let generatedPwd = "";
-    let displayPwd = "";
-    const characters = "1234567890qwerty!@#$%^&*()QWERTY";
-    const emoji = [
-      "😀",
-      "😆",
-      "😅",
-      "😂",
-      "🤣",
-      "😇",
-      "🙃",
-      "😉",
-      "😋",
-      "😝",
-      "🧐",
-      "🤓",
-      "🥳",
-      "😏",
-      "🥺",
-      "😢",
-      "😭",
-      "😤",
-      "😠",
-      "😰",
-      "😓",
-      "🤔",
-      "🤭",
-      "🤥",
-      "😶",
-      "😬",
-      "🙄",
-      "😦",
-      "😴",
-      "🤤",
-      "😵",
-      "😷"
-    ];
-    const charactersLength = characters.length;
-    const pwdLength = 5;
-    for (let i = 0; i < pwdLength; i++) {
-      let randomNum = Math.floor(Math.random() * charactersLength);
-      generatedPwd += characters.charAt(randomNum);
-      displayPwd += emoji[randomNum];
+  methods: {
+    nextPage(nextPgNo) {
+      if (this.unlock === true) {
+        this.page = nextPgNo;
+      } else {
+        this.snackbarColor = "info";
+        this.snackbarText =
+          "You need to successfully enter the password to continue.";
+        this.snackbar = true;
+      }
+      console.log(nextPgNo);
+    },
+    logging() {
+      let logData = `[${new Date().toISOString()}] UserAgentHeader: ${
+        navigator.userAgent
+      }`;
+      console.log(logData);
+      this.logs.push(logData);
+    },
+    getUnlockValue(value) {
+      this.unlock = value;
+    },
+    generateRandomPwd() {
+      let generatedPwd = "";
+      let displayPwd = "";
+      const characters = "1234567890qwerty!@#$%^&*()QWERTY";
+      // prettier-ignore
+      const emoji = ["😀", "😆", "😅", "😂", "🤣", "😇", "🙃", "😉", "😋", "😝", "🧐", "🤓", "🥳", "😏", "🥺", "😢", "😭", "😤", "😠", "😰", "😓", "🤔", "🤭", "🤥", "😶", "😬", "🙄", "😦", "😴", "🤤", "😵", "😷" ];
+      const charactersLength = characters.length;
+      const pwdLength = 5;
+      for (let i = 0; i < pwdLength; i++) {
+        let randomNum = Math.floor(Math.random() * charactersLength);
+        generatedPwd += characters.charAt(randomNum);
+        displayPwd += emoji[randomNum];
+      }
+      this.generatedPwd = generatedPwd;
+      this.displayPwd = displayPwd;
     }
-    this.generatedPwd = generatedPwd;
-    this.displayPwd = displayPwd;
+  },
+  created() {
+    this.generateRandomPwd();
+    this.logging();
   }
 };
 </script>
