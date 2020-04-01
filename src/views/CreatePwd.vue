@@ -14,13 +14,13 @@
         <v-divider></v-divider>
         <v-stepper-step :complete="page > 2" step="2">Banking</v-stepper-step>
         <v-divider></v-divider>
-        <v-stepper-step step="3">Unlock Phone</v-stepper-step>
+        <v-stepper-step step="3">Shopping</v-stepper-step>
       </v-stepper-header>
 
       <v-stepper-items class="pa-n8">
         <v-stepper-content step="1">
           <v-sheet>
-            <h1 class="title font-weight-medium">Step 1 new password for email:</h1>
+            <h1 class="title font-weight-medium">Step 1: New password for Email:</h1>
             <h1 class="headline font-weight-medium">
               You password is:
               <span v-if="!hidePwd">{{displayPwd}}</span>
@@ -42,19 +42,49 @@
         </v-stepper-content>
 
         <v-stepper-content step="2">
-          <v-card class="mb-12" color="grey lighten-1" height="200px"></v-card>
-
-          <v-btn color="primary" @click="page = 3">Continue</v-btn>
-
-          <v-btn text>Cancel</v-btn>
+           <v-sheet>
+            <h1 class="title font-weight-medium">Step 2: New password for Banking:</h1>
+            <h1 class="headline font-weight-medium">
+              You password is:
+              <span v-if="!hidePwd">{{displayPwd}}</span>
+            </h1>
+            <v-switch
+              inset
+              dense
+              :ripple="false"
+              v-model="hidePwd"
+              :label="`Hide password: ${hidePwd.toString()}`"
+              class="ma-0 ml-1"
+              hide-details
+            ></v-switch>
+          </v-sheet>
+          <EmojiPwd :randPwd="generatedPwd" @unlock="getUnlockValue" />
+          <v-sheet height="2vh"></v-sheet>
+          <v-btn color="primary" @click="nextPage(3)">Next</v-btn>
+          <v-btn text @click="bottomSheet = !bottomSheet">Check Log</v-btn>
         </v-stepper-content>
 
         <v-stepper-content step="3">
-          <v-card class="mb-12" color="grey lighten-1" height="200px"></v-card>
-
-          <v-btn color="primary" @click="page = 1">Continue</v-btn>
-
-          <v-btn text>Cancel</v-btn>
+          <v-sheet>
+            <h1 class="title font-weight-medium">Step 3: New password for Shopping:</h1>
+            <h1 class="headline font-weight-medium">
+              You password is:
+              <span v-if="!hidePwd">{{displayPwd}}</span>
+            </h1>
+            <v-switch
+              inset
+              dense
+              :ripple="false"
+              v-model="hidePwd"
+              :label="`Hide password: ${hidePwd.toString()}`"
+              class="ma-0 ml-1"
+              hide-details
+            ></v-switch>
+          </v-sheet>
+          <EmojiPwd :randPwd="generatedPwd" @unlock="getUnlockValue" />
+          <v-sheet height="2vh"></v-sheet>
+          <v-btn color="primary" @click="nextPage(1)">Next</v-btn>
+          <v-btn text @click="bottomSheet = !bottomSheet">Check Log</v-btn>
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
