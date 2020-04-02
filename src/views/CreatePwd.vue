@@ -39,6 +39,7 @@
           <v-sheet height="2vh"></v-sheet>
           <v-btn color="primary" @click="nextPage(2)">Next</v-btn>
           <v-btn text @click="bottomSheet = !bottomSheet">Check Log</v-btn>
+          <!-- <v-btn color="secondary" @click="exportToCsv('export.csv',logs)">Export to CSV</v-btn> -->
         </v-stepper-content>
 
         <v-stepper-content step="2">
@@ -98,6 +99,10 @@
           <ul id="log-data">
             <li v-for="(log, index) in logs" :key="index">{{log}}</li>
           </ul>
+          <v-sheet height="2vh"></v-sheet>
+          <div class="exportCSV" align="center">
+            <v-btn color="secondary" @click="exportToCsv('export.csv',logs)">Export to CSV</v-btn>
+          </div>
         </v-card-text>
       </v-card>
     </v-bottom-sheet>
@@ -145,7 +150,6 @@ export default {
   methods: {
     nextPage(nextPgNo) {
       if (this.unlock === true) {
-        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", CREATE, Login successful");
         this.hidePwd = false; //reset value to false
         this.unlock = false; //reset value to false
         this.page = nextPgNo;
@@ -154,20 +158,19 @@ export default {
         this.snackbarText =
           "You need to successfully enter the password to continue.";
         this.snackbar = true;
-        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", CREATE, Login failed");
       }
     },
 
     navEmailTest() {
       if (this.unlock === true) {
-        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", CREATE, Login successful");
         this.$router.push({
           name: "EmailTest",
                   params: {
           logData: this.logs,
           emailPass: this.emailPass,
           bankPass: this.bankPass,
-          phonePass: this.phonePass
+          phonePass: this.phonePass,
+          userId: this.userId
         }
         });
       } else {
@@ -175,7 +178,6 @@ export default {
         this.snackbarText =
           "You need to successfully enter the password to continue.";
         this.snackbar = true;
-        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", CREATE, Login failed");
       }
     },
     logging() {
@@ -186,7 +188,11 @@ export default {
     },
     getUnlockValue(value) {
       this.unlock = value;
-      console.log(value);
+      if(value) {
+        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", CREATE, Login successful");
+      } else {
+        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", CREATE, Login failed");
+      }
     },
     generateRandomPwd(object) {
       let generatedPwd = "";
@@ -207,6 +213,55 @@ export default {
     randId() {
      return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
 
+    },
+    exportToCsv(filename, rows) {
+        var processRow = function (row) {
+            var finalVal = '';
+            for (var j = 0; j < row.length; j++) {
+                var innerValue = row[j] === null ? '' : row[j].toString();
+                if (row[j] instanceof Date) {
+                    innerValue = row[j].toLocaleString();
+                }
+                var result = innerValue.replace(/"/g, '""');
+                if (result.search(/("|,|\n)/g) >= 0)
+                    result = '"' + result + '"';
+                if (j > 0)
+                    finalVal += ',';
+                finalVal += result;
+            }
+            return finalVal + '\n';
+        };
+
+        var csvFile = '';
+        var logRows = [];
+        //var result = [];
+        for(var a =0; a < rows.length; a++){
+          var result = rows[a].split(",");
+          console.log(result);
+          logRows.push(result);
+        }
+
+        for (var i = 0; i < logRows.length; i++) {
+            csvFile += processRow(logRows[i]);
+        }
+
+        var blob = new Blob([csvFile], { type: 'text/csv;charset=utf-8;' });
+        if (navigator.msSaveBlob) { // IE 10+
+            navigator.msSaveBlob(blob, filename);
+        } else {
+            var link = document.createElement("a");
+            if (link.download !== undefined) { // feature detection
+                // Browsers that support HTML5 download attribute
+                var url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", filename);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+        
     }
   },
   created() {
@@ -218,7 +273,6 @@ export default {
     this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + "Email, CREATE, Login password created");
     this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + "Banking, CREATE, Login password created");
     this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + "Phone, CREATE, Login password created");
-    //this.logging();
   }
 };
 </script>
