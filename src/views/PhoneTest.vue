@@ -5,10 +5,6 @@
       <div class="caption pb-6">Tries: {{tries}}</div>
       <EmojiPwd :randPwd="phonePass.generatedPwd" @unlock="getUnlockValue" />
     </v-sheet>
-    <!-- <div
-      class="ma-6"
-    >Email Test LogData {{logData}}{{phonePass["displayPwd"]}}
-    </div> -->
     <v-sheet height="2vh"></v-sheet>
     <v-btn text @click="bottomSheet = !bottomSheet">Check Log</v-btn>
     <v-bottom-sheet v-model="bottomSheet" inset :scrollable="true">
@@ -20,6 +16,10 @@
           <ul id="log-data">
             <li v-for="(log, index) in logData" :key="index">{{log}}</li>
           </ul>
+           <v-sheet height="2vh"></v-sheet>
+           <div class="end" align="center" v-if="end==true">
+             <h2>Thank you for participating!</h2>
+           </div>
            <v-sheet height="2vh"></v-sheet>
           <div class="exportCSV" align="center">
             <v-btn color="secondary" @click="exportToCsv('export.csv',logData)">Export to CSV</v-btn>
@@ -41,7 +41,8 @@ export default {
     return {
       unlock: false,
       bottomSheet: false,
-      tries: 3
+      tries: 3,
+      end: false
     };
   },
   components: {
@@ -54,11 +55,14 @@ export default {
       this.unlock = value;
       if(value) {
         this.logData.push(`${new Date().toISOString()}` + ", " + this.userId + ", Phone, TEST, Login successful");
+        this.end = true;
+        this.bottomSheet = true;
       } else {
-        this.logData.push(`${new Date().toISOString()}` + ", " + this.userId + ", Phone, TEST, Login un-successful");
-        this.tries--;
+          this.logData.push(`${new Date().toISOString()}` + ", " + this.userId + ", Phone, TEST, Login un-successful");
+          this.tries--;
         if(this.tries <= 0) {
-          // do something
+          this.end = true;
+          this.bottomSheet = true;
         }
       }
     },
@@ -85,7 +89,6 @@ export default {
 
         var csvFile = '';
         var logRows = [];
-        //var result = [];
         for(var a =0; a < rows.length; a++){
           var result = rows[a].split(",");
           console.log(result);
