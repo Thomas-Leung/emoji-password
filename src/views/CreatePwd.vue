@@ -145,7 +145,6 @@ export default {
   methods: {
     nextPage(nextPgNo) {
       if (this.unlock === true) {
-        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", CREATE, Login successful");
         this.hidePwd = false; //reset value to false
         this.unlock = false; //reset value to false
         this.page = nextPgNo;
@@ -154,20 +153,19 @@ export default {
         this.snackbarText =
           "You need to successfully enter the password to continue.";
         this.snackbar = true;
-        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", CREATE, Login failed");
       }
     },
 
     navEmailTest() {
       if (this.unlock === true) {
-        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", CREATE, Login successful");
         this.$router.push({
           name: "EmailTest",
                   params: {
           logData: this.logs,
           emailPass: this.emailPass,
           bankPass: this.bankPass,
-          phonePass: this.phonePass
+          phonePass: this.phonePass,
+          userId: this.userId
         }
         });
       } else {
@@ -175,7 +173,6 @@ export default {
         this.snackbarText =
           "You need to successfully enter the password to continue.";
         this.snackbar = true;
-        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", CREATE, Login failed");
       }
     },
     logging() {
@@ -186,7 +183,11 @@ export default {
     },
     getUnlockValue(value) {
       this.unlock = value;
-      console.log(value);
+      if(value) {
+        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", CREATE, Login successful");
+      } else {
+        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", CREATE, Login failed");
+      }
     },
     generateRandomPwd(object) {
       let generatedPwd = "";
@@ -218,7 +219,6 @@ export default {
     this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + "Email, CREATE, Login password created");
     this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + "Banking, CREATE, Login password created");
     this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + "Phone, CREATE, Login password created");
-    //this.logging();
   }
 };
 </script>

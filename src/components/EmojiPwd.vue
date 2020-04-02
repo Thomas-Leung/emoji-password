@@ -93,6 +93,7 @@ export default {
         this.snackbarColor = "error";
         this.snackbarText = "Wrong Passcode, try again.";
         this.shake = true;
+        this.$emit("unlock", false);
       }
       this.snackbar = true;
       var that = this;
