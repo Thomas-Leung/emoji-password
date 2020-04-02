@@ -5,11 +5,6 @@
     <EmojiPwd class="ml-6 mr-6" :randPwd="bankPass.generatedPwd" @unlock="getUnlockValue" />
     <v-sheet height="2vh"></v-sheet>
     <v-btn text @click="bottomSheet = !bottomSheet">Check Log</v-btn>
-    <!-- <div
-      class="ma-6"
-    >Email Test LogData {{logData}}{{bankPass["displayPwd"]}}{{phonePass["displayPwd"]}}
-    </div> -->
-
     <v-bottom-sheet v-model="bottomSheet" inset :scrollable="true">
       <v-card height="350px">
         <v-card-title>
