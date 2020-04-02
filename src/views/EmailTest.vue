@@ -5,12 +5,11 @@
     <div class="caption pb-6">Tries: {{tries}}</div>
     <EmojiPwd class="ml-6 mr-6" :randPwd="emailPass.generatedPwd" @unlock="getUnlockValue" />
     <v-sheet height="2vh"></v-sheet>
-    <!-- <v-btn color="primary" @click="nextPage(2)">Next</v-btn> -->
     <v-btn text @click="bottomSheet = !bottomSheet">Check Log</v-btn>
     <!-- <div
       class="ma-6"
-    >Email Test LogData {{logData}}{{emailPass["displayPwd"]}}{{bankPass["displayPwd"]}}{{phonePass["displayPwd"]}}</div>
-    <v-btn @click="logData.push('YEAHHHHH')">Press me</v-btn> -->
+    >Email Test LogData {{logData}}{{emailPass["displayPwd"]}}{{bankPass["displayPwd"]}}{{phonePass["displayPwd"]}}
+    </div>-->
 
      <v-bottom-sheet v-model="bottomSheet" inset :scrollable="true">
       <v-card height="350px">
@@ -53,7 +52,8 @@ export default {
           params: {
             logData: this.logData,
             bankPass: this.bankPass,
-            phonePass: this.phonePass
+            phonePass: this.phonePass,
+            userId: this.userId
           }
         });
       } else {
@@ -65,16 +65,14 @@ export default {
               params: {
                 logData: this.logData,
                 bankPass: this.bankPass,
-                phonePass: this.phonePass
+                phonePass: this.phonePass,
+                userId: this.userId
               }
             });
           } 
       }
     }
   }
-  // , created() {
-  //   console.log("The true password" + this.emailPass.generatedPwd);
-  // }
 };
 </script>
 

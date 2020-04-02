@@ -1,13 +1,27 @@
 <template>
   <div class="bank-test-content" align="center">
-    <div class="title pt-6">BANK ATM</div>
-    <v-sheet :elevation="2" class="mx-auto" height="100" width="100">Enter Emoji PIN</v-sheet>
+    <div class="title pt-6">Sign in to your Bank account</div>
+    <div class="caption pb-6">Tries: {{tries}}</div>
     <EmojiPwd class="ml-6 mr-6" :randPwd="bankPass.generatedPwd" @unlock="getUnlockValue" />
-
-    <div
+    <v-sheet height="2vh"></v-sheet>
+    <v-btn text @click="bottomSheet = !bottomSheet">Check Log</v-btn>
+    <!-- <div
       class="ma-6"
-    >Email Test LogData {{logData}}{{bankPass["displayPwd"]}}{{phonePass["displayPwd"]}}</div>
-    <v-btn @click="logData.push('YEAHHHHH')">Press me</v-btn>
+    >Email Test LogData {{logData}}{{bankPass["displayPwd"]}}{{phonePass["displayPwd"]}}
+    </div> -->
+
+    <v-bottom-sheet v-model="bottomSheet" inset :scrollable="true">
+      <v-card height="350px">
+        <v-card-title>
+          <span class="title">Log Data:</span>
+        </v-card-title>
+        <v-card-text>
+          <ul id="log-data">
+            <li v-for="(log, index) in logData" :key="index">{{log}}</li>
+          </ul>
+        </v-card-text>
+      </v-card>
+    </v-bottom-sheet>
   </div>
 </template>
 
@@ -18,22 +32,40 @@ export default {
   components: {
     EmojiPwd
   },
-  props: ["logData", "bankPass", "phonePass"],
+  props: ["logData", "bankPass", "phonePass", "userId"],
   data: function() {
     return {
-      unlock: false
+      bottomSheet: false,
+      unlock: false, // this isn't needed?
+      tries: 3
     };
   },
   methods: {
     getUnlockValue(value) {
+      //this.unlock = value;
       if (value === true) {
+        this.logData.push(`${new Date().toISOString()}` + ", " + this.userId + ", Bank, TEST, Login successful");
         this.$router.push({
           name: "PhoneTest",
           params: {
             logData: this.logData,
-            phonePass: this.phonePass
+            phonePass: this.phonePass,
+            userId: this.userId
           }
         });
+      } else {
+        this.logData.push(`${new Date().toISOString()}` + ", " + this.userId + ", Bank, TEST, Login un-successful");
+        this.tries--;
+        if (this.tries <= 0) {
+          this.$router.push({
+            name: "PhoneTest",
+            params: {
+              logData: this.logData,
+              phonePass: this.phonePass,
+              userId: this.userId
+            }
+          });
+        }
       }
     }
   }
