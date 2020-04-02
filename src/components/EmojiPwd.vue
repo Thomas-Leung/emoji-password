@@ -79,15 +79,12 @@ export default {
     },
     typePwd: function(value) {
       this.passcode += value;
-      console.log(value);
     },
     reset() {
       this.passcode = "";
       this.shake = false;
     },
     login() {
-            console.log(Object.keys(this.emoji).length);
-
       if (this.passcode == this.randPwd) {
         this.snackbarColor = "success";
         this.snackbarText = "Correct Passcode~"; // Click the unlock icon to lock again.
