@@ -8,7 +8,7 @@
     </v-row>
     <v-container :class="{'shakePin': shake}" class="grey lighten-4" style="border-radius:15px">
       <v-row v-for="i in 4" :key="i" no-gutters>
-        <v-col v-for="j in 4" :key="j">
+        <v-col v-for="j in 8" :key="j">
           <v-card height="8vh" outlined tile align="center">
             <v-btn
               class="display-1"
@@ -17,8 +17,8 @@
               text
               width="100%"
               height="100%"
-              @click="typePwd(emoji[i == 1? i * j : 4*(i-1) + j].symbol)"
-            >{{emoji[i == 1? i * j : 4*(i-1) + j].emoji}}</v-btn>
+              @click="typePwd(emoji[i == 1? i * j : 8*(i-1) + j].symbol)"
+            >{{emoji[i == 1? i * j : 8*(i-1) + j].emoji}}</v-btn>
           </v-card>
         </v-col>
       </v-row>
@@ -30,9 +30,9 @@
           </v-btn>
         </v-col>
         <v-col class="pb-0 pt-1" cols="auto">
-          <v-btn text @click="switchEmoji">
+          <!-- <v-btn text @click="switchEmoji">
             <v-icon>{{arrow}}</v-icon>
-          </v-btn>
+          </v-btn> -->
         </v-col>
         <v-col class="pb-0 pt-1" cols="auto">
           <v-btn text class="caption" @click="login" :disabled="unlock">
@@ -79,12 +79,15 @@ export default {
     },
     typePwd: function(value) {
       this.passcode += value;
+      console.log(value);
     },
     reset() {
       this.passcode = "";
       this.shake = false;
     },
     login() {
+            console.log(Object.keys(this.emoji).length);
+
       if (this.passcode == this.randPwd) {
         this.snackbarColor = "success";
         this.snackbarText = "Correct Passcode~"; // Click the unlock icon to lock again.
