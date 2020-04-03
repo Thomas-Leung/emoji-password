@@ -183,16 +183,18 @@ export default {
       }
     },
     logging() {
-      let logData = `[${new Date().toISOString()}] UserAgentHeader: ${
-        navigator.userAgent
-      }`;
+      let logData = `[${new Date(
+        new Date().getTime() + -new Date().getTimezoneOffset() * 60 * 1000
+      ).toISOString()}] UserAgentHeader: ${navigator.userAgent}`;
       this.logs.push(logData);
     },
     getUnlockValue(value) {
       this.unlock = value;
       if (value) {
         this.logs.push(
-          `${new Date().toISOString()}` +
+          `[${new Date(
+            new Date().getTime() + -new Date().getTimezoneOffset() * 60 * 1000
+          ).toISOString()}]` +
             ", " +
             this.userId +
             ", " +
@@ -201,7 +203,9 @@ export default {
         );
       } else {
         this.logs.push(
-          `${new Date().toISOString()}` +
+          `[${new Date(
+            new Date().getTime() + -new Date().getTimezoneOffset() * 60 * 1000
+          ).toISOString()}]` +
             ", " +
             this.userId +
             ", " +
@@ -238,21 +242,27 @@ export default {
     this.generateRandomPwd(this.bankPass);
     this.generateRandomPwd(this.phonePass);
     this.logs.push(
-      `${new Date().toISOString()}` +
+      `[${new Date(
+        new Date().getTime() + -new Date().getTimezoneOffset() * 60 * 1000
+      ).toISOString()}]` +
         ", " +
         this.userId +
         ", " +
         "Email, CREATE, Login password created"
     );
     this.logs.push(
-      `${new Date().toISOString()}` +
+      `[${new Date(
+        new Date().getTime() + -new Date().getTimezoneOffset() * 60 * 1000
+      ).toISOString()}]` +
         ", " +
         this.userId +
         ", " +
         "Banking, CREATE, Login password created"
     );
     this.logs.push(
-      `${new Date().toISOString()}` +
+      `[${new Date(
+        new Date().getTime() + -new Date().getTimezoneOffset() * 60 * 1000
+      ).toISOString()}]` +
         ", " +
         this.userId +
         ", " +

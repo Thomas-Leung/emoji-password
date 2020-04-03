@@ -37,11 +37,7 @@ export default {
     return {
       drawer: null,
       items: [
-        { title: "Create Password", icon: "mdi-pencil", to: "/"},
-        { title: "EmailTest", icon: "mdi-test-tube", to: "/emailTest" },
-        { title: "BankTest", icon: "mdi-test-tube", to: "/bankTest" },
-        { title: "MobileTest", icon: "mdi-test-tube", to: "/mobileTest" },
-        { title: "About", icon: "mdi-information-outline", to: "/about" }
+        { title: "Create Password", icon: "mdi-pencil", to: "/"}
       ]
     };
   }

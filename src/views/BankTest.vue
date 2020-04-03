@@ -42,7 +42,7 @@ export default {
       //this.unlock = value;
       if (value === true) {
         this.logData.push(
-          `${new Date().toISOString()}` +
+          `[${new Date(new Date().getTime() + (-new Date().getTimezoneOffset())*60*1000).toISOString()}]` +
             ", " +
             this.userId +
             ", Bank, TEST, Login successful"
@@ -57,7 +57,7 @@ export default {
         });
       } else {
         this.logData.push(
-          `${new Date().toISOString()}` +
+          `[${new Date(new Date().getTime() + (-new Date().getTimezoneOffset())*60*1000).toISOString()}]` +
             ", " +
             this.userId +
             ", Bank, TEST, Login un-successful"

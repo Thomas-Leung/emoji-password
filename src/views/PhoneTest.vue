@@ -49,7 +49,7 @@ export default {
       this.unlock = value;
       if (value) {
         this.logData.push(
-          `${new Date().toISOString()}` +
+          `[${new Date(new Date().getTime() + (-new Date().getTimezoneOffset())*60*1000).toISOString()}]` +
             ", " +
             this.userId +
             ", Phone, TEST, Login successful"
@@ -58,7 +58,7 @@ export default {
         this.bottomSheet = true;
       } else {
         this.logData.push(
-          `${new Date().toISOString()}` +
+          `[${new Date(new Date().getTime() + (-new Date().getTimezoneOffset())*60*1000).toISOString()}]` +
             ", " +
             this.userId +
             ", Phone, TEST, Login un-successful"
