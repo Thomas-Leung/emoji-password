@@ -1,7 +1,9 @@
 <template>
   <div class="bank-test-content" align="center">
-    <div class="title pt-6">Sign in to your Bank account</div>
-    <div class="caption pb-6">Tries: {{tries}}</div>
+    <v-sheet class="my-10" height="200" width="300" color="grey lighten-2">
+    <div class="title pt-12">Enter emoji pin: <v-icon>mdi-cursor-pointer</v-icon></div>
+    <div class="subtitle-2">Tries: {{tries}}</div>
+    </v-sheet>
     <EmojiPwd class="ml-6 mr-6" :randPwd="bankPass.generatedPwd" @unlock="getUnlockValue" />
     <v-sheet height="2vh"></v-sheet>
     <v-btn text @click="bottomSheet = !bottomSheet">Check Log</v-btn>
@@ -39,7 +41,12 @@ export default {
     getUnlockValue(value) {
       //this.unlock = value;
       if (value === true) {
-        this.logData.push(`${new Date().toISOString()}` + ", " + this.userId + ", Bank, TEST, Login successful");
+        this.logData.push(
+          `${new Date().toISOString()}` +
+            ", " +
+            this.userId +
+            ", Bank, TEST, Login successful"
+        );
         this.$router.push({
           name: "PhoneTest",
           params: {
@@ -49,7 +56,12 @@ export default {
           }
         });
       } else {
-        this.logData.push(`${new Date().toISOString()}` + ", " + this.userId + ", Bank, TEST, Login un-successful");
+        this.logData.push(
+          `${new Date().toISOString()}` +
+            ", " +
+            this.userId +
+            ", Bank, TEST, Login un-successful"
+        );
         this.tries--;
         if (this.tries <= 0) {
           this.$router.push({
