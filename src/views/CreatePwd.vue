@@ -221,7 +221,7 @@ export default {
       // prettier-ignore
       const emoji = ["😀", "😆", "😅", "😂", "🤣", "😇", "🙃", "😉", "😋", "😝", "🧐", "🤓", "🥳", "😏", "🥺", "😢", "😭", "😤", "😠", "😰", "😓", "🤔", "🤭", "🤥", "😶", "😬", "🙄", "😦", "😴", "🤤", "😵", "😷" ];
       const charactersLength = characters.length;
-      const pwdLength = 1;
+      const pwdLength = 5;
       for (let i = 0; i < pwdLength; i++) {
         let randomNum = Math.floor(Math.random() * charactersLength);
         generatedPwd += characters.charAt(randomNum);
