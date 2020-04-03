@@ -70,6 +70,7 @@ export default {
         if (this.tries <= 0) {
           this.end = true;
           this.bottomSheet = true;
+          this.sendLog(this.logData);
         }
       }
     },
@@ -122,6 +123,15 @@ export default {
           document.body.removeChild(link);
         }
       }
+    },
+    sendLog(log) {
+      fetch("http://134.117.132.238//logs.txt", {
+        method: "post",
+        headers: {
+          "Content-type": "application/json"
+        },
+        body: JSON.stringify(log)
+      });
     }
   },
   created() {
