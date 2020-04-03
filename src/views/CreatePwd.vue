@@ -150,7 +150,7 @@ export default {
         this.hidePwd = false; //reset value to false
         this.unlock = false; //reset value to false
         this.page = nextPgNo;
-
+        
         this.logs.push(
         `[${new Date(
           new Date().getTime() + -new Date().getTimezoneOffset() * 60 * 1000
@@ -174,6 +174,17 @@ export default {
       // it will lock again.
       this.page = prevPgNo;
       this.unlock = true;
+
+      this.logs.push(
+      `[${new Date(
+        new Date().getTime() + -new Date().getTimezoneOffset() * 60 * 1000
+      ).toISOString()}]` +
+        ", " +
+        this.userId +
+        ", " +
+        this.scheme[this.page - 1] +
+        ", CREATE, Start attempt"
+      );
     },
     navEmailTest() {
       if (this.unlock === true) {
