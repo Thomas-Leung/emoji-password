@@ -60,6 +60,7 @@
           </v-sheet>
           <EmojiPwd :randPwd="bankPass.generatedPwd" @unlock="getUnlockValue" />
           <v-sheet height="2vh"></v-sheet>
+          <v-btn class="mr-2" color="secondary" @click="previousPage(1)">back</v-btn>
           <v-btn color="primary" @click="nextPage(3)">Next</v-btn>
           <v-btn text @click="bottomSheet = !bottomSheet">Check Log</v-btn>
         </v-stepper-content>
@@ -83,6 +84,7 @@
           </v-sheet>
           <EmojiPwd :randPwd="phonePass.generatedPwd" @unlock="getUnlockValue" />
           <v-sheet height="2vh"></v-sheet>
+          <v-btn class="mr-2" color="secondary" @click="previousPage(2)">back</v-btn>
           <v-btn color="primary" @click="navEmailTest()">Start Testing</v-btn>
           <v-btn text @click="bottomSheet = !bottomSheet">Check Log</v-btn>
         </v-stepper-content>
@@ -155,18 +157,23 @@ export default {
         this.snackbar = true;
       }
     },
-
+    previousPage(prevPgNo) {
+      // minor bug: if you go 2 previous and move 2 pages forward,
+      // it will lock again.
+      this.page = prevPgNo;
+      this.unlock = true;
+    },
     navEmailTest() {
       if (this.unlock === true) {
         this.$router.push({
           name: "EmailTest",
-                  params: {
-          logData: this.logs,
-          emailPass: this.emailPass,
-          bankPass: this.bankPass,
-          phonePass: this.phonePass,
-          userId: this.userId
-        }
+          params: {
+            logData: this.logs,
+            emailPass: this.emailPass,
+            bankPass: this.bankPass,
+            phonePass: this.phonePass,
+            userId: this.userId
+          }
         });
       } else {
         this.snackbarColor = "info";
@@ -176,17 +183,35 @@ export default {
       }
     },
     logging() {
-      let logData = `[${new Date().toISOString()}] UserAgentHeader: ${
-        navigator.userAgent
-      }`;
+      let logData = `[${new Date(
+        new Date().getTime() + -new Date().getTimezoneOffset() * 60 * 1000
+      ).toISOString()}] UserAgentHeader: ${navigator.userAgent}`;
       this.logs.push(logData);
     },
     getUnlockValue(value) {
       this.unlock = value;
-      if(value) {
-        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", CREATE, Login successful");
+      if (value) {
+        this.logs.push(
+          `[${new Date(
+            new Date().getTime() + -new Date().getTimezoneOffset() * 60 * 1000
+          ).toISOString()}]` +
+            ", " +
+            this.userId +
+            ", " +
+            this.scheme[this.page - 1] +
+            ", CREATE, Login successful"
+        );
       } else {
-        this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + this.scheme[this.page - 1] +", CREATE, Login failed");
+        this.logs.push(
+          `[${new Date(
+            new Date().getTime() + -new Date().getTimezoneOffset() * 60 * 1000
+          ).toISOString()}]` +
+            ", " +
+            this.userId +
+            ", " +
+            this.scheme[this.page - 1] +
+            ", CREATE, Login failed"
+        );
       }
     },
     generateRandomPwd(object) {
@@ -204,9 +229,11 @@ export default {
       }
       object.generatedPwd = generatedPwd;
       object.displayPwd = displayPwd;
+      console.log(displayPwd);
     },
     randId() {
-     return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
+      // prettier-ignore
+      return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);
     }
   },
   created() {
@@ -214,9 +241,33 @@ export default {
     this.generateRandomPwd(this.emailPass);
     this.generateRandomPwd(this.bankPass);
     this.generateRandomPwd(this.phonePass);
-    this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + "Email, CREATE, Login password created");
-    this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + "Banking, CREATE, Login password created");
-    this.logs.push(`${new Date().toISOString()}` + ", " + this.userId + ", " + "Phone, CREATE, Login password created");
+    this.logs.push(
+      `[${new Date(
+        new Date().getTime() + -new Date().getTimezoneOffset() * 60 * 1000
+      ).toISOString()}]` +
+        ", " +
+        this.userId +
+        ", " +
+        "Email, CREATE, Login password created"
+    );
+    this.logs.push(
+      `[${new Date(
+        new Date().getTime() + -new Date().getTimezoneOffset() * 60 * 1000
+      ).toISOString()}]` +
+        ", " +
+        this.userId +
+        ", " +
+        "Banking, CREATE, Login password created"
+    );
+    this.logs.push(
+      `[${new Date(
+        new Date().getTime() + -new Date().getTimezoneOffset() * 60 * 1000
+      ).toISOString()}]` +
+        ", " +
+        this.userId +
+        ", " +
+        "Phone, CREATE, Login password created"
+    );
   }
 };
 </script>
