@@ -10,7 +10,7 @@
     <v-bottom-sheet v-model="bottomSheet" inset :scrollable="true">
       <v-card height="350px">
         
-          <div class = "end" align="center" v-if="end==true">
+          <div class="mt-2" align="center" v-if="end==true">
             <h3>Thank you for participating!</h3>
           </div>
         <v-card-title>
