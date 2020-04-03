@@ -150,6 +150,18 @@ export default {
         this.hidePwd = false; //reset value to false
         this.unlock = false; //reset value to false
         this.page = nextPgNo;
+
+        this.logs.push(
+        `[${new Date(
+          new Date().getTime() + -new Date().getTimezoneOffset() * 60 * 1000
+        ).toISOString()}]` +
+          ", " +
+          this.userId +
+          ", " +
+          this.scheme[this.page - 1] +
+          ", CREATE, Start attempt"
+        );
+
       } else {
         this.snackbarColor = "info";
         this.snackbarText =
@@ -267,6 +279,15 @@ export default {
         this.userId +
         ", " +
         "Phone, CREATE, Login password created"
+    );
+    this.logs.push(
+      `[${new Date(
+        new Date().getTime() + -new Date().getTimezoneOffset() * 60 * 1000
+      ).toISOString()}]` +
+        ", " +
+        this.userId +
+        ", " +
+        "Email, CREATE, Start attempt"
     );
   }
 };

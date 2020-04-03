@@ -75,6 +75,17 @@ export default {
         }
       }
     }
+  },
+  created() {
+    this.logData.push(
+    `[${new Date(
+      new Date().getTime() + -new Date().getTimezoneOffset() * 60 * 1000
+    ).toISOString()}]` +
+      ", " +
+      this.userId +
+      ", " +
+      "Bank, TEST, Start attempt"
+    );
   }
 };
 </script>
