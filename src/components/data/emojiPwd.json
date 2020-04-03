@@ -67,6 +67,70 @@
         {
             "emoji": "😢",
             "symbol": "y"
+        },
+        {
+            "emoji": "😭",
+            "symbol": "!"
+        },
+        {
+            "emoji": "😤",
+            "symbol": "@"
+        },
+        {
+            "emoji": "😠",
+            "symbol": "#"
+        },
+        {
+            "emoji": "😰",
+            "symbol": "$"
+        },
+        {
+            "emoji": "😓",
+            "symbol": "%"
+        },
+        {
+            "emoji": "🤔",
+            "symbol": "^"
+        },
+        {
+            "emoji": "🤭",
+            "symbol": "&"
+        },
+        {
+            "emoji": "🤥",
+            "symbol": "*"
+        },
+        {
+            "emoji": "😶",
+            "symbol": "("
+        },
+        {
+            "emoji": "😬",
+            "symbol": ")"
+        },
+        {
+            "emoji": "🙄",
+            "symbol": "Q"
+        },
+        {
+            "emoji": "😦",
+            "symbol": "W"
+        },
+        {
+            "emoji": "😴",
+            "symbol": "E"
+        },
+        {
+            "emoji": "🤤",
+            "symbol": "R"
+        },
+        {
+            "emoji": "😵",
+            "symbol": "T"
+        },
+        {
+            "emoji": "😷",
+            "symbol": "Y"
         }
     ],
     "page2": [
