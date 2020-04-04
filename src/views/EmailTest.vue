@@ -10,7 +10,10 @@
       filled
       dense
     ></v-text-field>
-    <EmojiPwd class="ml-6 mr-6" :randPwd="emailPass.generatedPwd" @unlock="getUnlockValue" />
+    <v-btn text @click="startAttempt = true; logAttempt()">Start attempt</v-btn>
+    <div class="class" v-if="startAttempt == true">
+      <EmojiPwd class="ml-6 mr-6" :randPwd="emailPass.generatedPwd" @unlock="getUnlockValue" />
+    </div>
     <v-sheet height="2vh"></v-sheet>
     <v-btn text @click="bottomSheet = !bottomSheet">Check Log</v-btn>
      <v-bottom-sheet v-model="bottomSheet" inset :scrollable="true">
@@ -40,7 +43,8 @@ export default {
     return {
       bottomSheet: false,
       unlock: false, // this isn't needed?
-      tries: 3
+      tries: 3,
+      startAttempt: false
     };
   },
   methods: {
@@ -82,18 +86,19 @@ export default {
           });
         }
       }
+      this.startAttempt = false;
+    },
+    logAttempt() {
+      this.logData.push(
+      `[${new Date(
+        new Date().getTime() + -new Date().getTimezoneOffset() * 60 * 1000
+      ).toISOString()}]` +
+        ", " +
+        this.userId +
+        ", " +
+        "Email, TEST, Start attempt"
+      );
     }
-  },
-  created() {
-    this.logData.push(
-    `[${new Date(
-      new Date().getTime() + -new Date().getTimezoneOffset() * 60 * 1000
-    ).toISOString()}]` +
-      ", " +
-      this.userId +
-      ", " +
-      "Email, TEST, Start attempt"
-    );
   }
 };
 </script>

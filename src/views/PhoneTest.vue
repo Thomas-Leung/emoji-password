@@ -3,7 +3,10 @@
     <Clock :unlock="unlock" @unlock="lock" />
     <v-sheet class="pa-4">
       <div class="caption">Tries: {{tries}}</div>
-      <EmojiPwd :randPwd="phonePass.generatedPwd" @unlock="getUnlockValue" />
+      <v-btn text @click="startAttempt = true; logAttempt()">Start attempt</v-btn>
+      <div class="class" v-if="startAttempt == true">
+        <EmojiPwd class="ml-6 mr-6" :randPwd="phonePass.generatedPwd" @unlock="getUnlockValue" />
+      </div>
     </v-sheet>
     <v-sheet height="2vh"></v-sheet>
     <v-btn text @click="bottomSheet = !bottomSheet">Check Log</v-btn>
@@ -39,7 +42,8 @@ export default {
       unlock: false,
       bottomSheet: false,
       tries: 3,
-      end: false
+      end: false,
+      startAttempt: false
     };
   },
   components: {
@@ -70,9 +74,10 @@ export default {
         if (this.tries <= 0) {
           this.end = true;
           this.bottomSheet = true;
-          this.sendLog(this.logData);
+          //this.sendLog(this.logData); // not working
         }
       }
+      this.startAttempt = false;
     },
     lock(value) {
       this.unlock = value;
@@ -132,18 +137,18 @@ export default {
         },
         body: JSON.stringify(log)
       });
+    },
+    logAttempt() {
+      this.logData.push(
+      `[${new Date(
+        new Date().getTime() + -new Date().getTimezoneOffset() * 60 * 1000
+      ).toISOString()}]` +
+        ", " +
+        this.userId +
+        ", " +
+        "Phone, TEST, Start attempt"
+      );
     }
-  },
-  created() {
-    this.logData.push(
-    `[${new Date(
-      new Date().getTime() + -new Date().getTimezoneOffset() * 60 * 1000
-    ).toISOString()}]` +
-      ", " +
-      this.userId +
-      ", " +
-      "Phone, TEST, Start attempt"
-    );
   }
 };
 </script>
