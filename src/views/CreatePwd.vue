@@ -22,7 +22,7 @@
           <v-sheet>
             <h1 class="title font-weight-medium">Step 1: New password for Email:</h1>
             <h1 class="headline font-weight-medium">
-              You password is:
+              Your password is:
               <span v-if="!hidePwd">{{emailPass.displayPwd}}</span>
             </h1>
             <v-switch
@@ -45,7 +45,7 @@
           <v-sheet>
             <h1 class="title font-weight-medium">Step 2: New password for Banking:</h1>
             <h1 class="headline font-weight-medium">
-              You password is:
+              Your password is:
               <span v-if="!hidePwd">{{bankPass.displayPwd}}</span>
             </h1>
             <v-switch
@@ -69,7 +69,7 @@
           <v-sheet>
             <h1 class="title font-weight-medium">Step 3: New password for phone:</h1>
             <h1 class="headline font-weight-medium">
-              You password is:
+              Your password is:
               <span v-if="!hidePwd">{{phonePass.displayPwd}}</span>
             </h1>
             <v-switch
