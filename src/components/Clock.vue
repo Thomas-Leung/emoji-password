@@ -22,6 +22,9 @@
 
 <script>
 export default {
+  /**
+   * This class only displays the clock when doing the unlock phone test.
+   */
   name: "Clock",
   props: {
     unlock: Boolean

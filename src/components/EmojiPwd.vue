@@ -6,6 +6,7 @@
         <v-icon size="20">mdi-checkbox-blank-circle</v-icon>
       </v-col>
     </v-row>
+    <!-- Generating a grid of emoji -->
     <v-container :class="{'shakePin': shake}" class="grey lighten-4" style="border-radius:15px">
       <v-row v-for="i in 4" :key="i" no-gutters>
         <v-col v-for="j in 8" :key="j">
@@ -23,16 +24,12 @@
         </v-col>
       </v-row>
 
+      <!-- Layout for reset and submit button -->
       <v-row align="center" justify="space-between">
         <v-col class="pb-0 pt-1" cols="auto">
           <v-btn text class="caption" @click="reset" :disabled="unlock">
             <v-icon size="16">mdi-lock-reset</v-icon>Reset
           </v-btn>
-        </v-col>
-        <v-col class="pb-0 pt-1" cols="auto">
-          <!-- <v-btn text @click="switchEmoji">
-            <v-icon>{{arrow}}</v-icon>
-          </v-btn> -->
         </v-col>
         <v-col class="pb-0 pt-1" cols="auto">
           <v-btn text class="caption" @click="login" :disabled="unlock">
@@ -42,6 +39,8 @@
         </v-col>
       </v-row>
     </v-container>
+
+    <!-- A snackbar that prompt user if the password was successful or not. -->
     <v-snackbar :color="snackbarColor" v-model="snackbar">
       {{ snackbarText }}
       <v-btn text @click="snackbar = false">Close</v-btn>
@@ -52,6 +51,9 @@
 <script>
 import emojiPwd from "@/components/data/emojiPwd.json";
 export default {
+  /**
+  This is the core of the emoji password.
+   */
   props: {
     unlock: Boolean,
     randPwd: String
@@ -68,22 +70,24 @@ export default {
     };
   },
   methods: {
-    switchEmoji: function() {
-      if (this.arrow === "mdi-chevron-down") {
-        this.emoji = emojiPwd["page2"];
-        this.arrow = "mdi-chevron-up";
-      } else {
-        this.emoji = emojiPwd["page1"];
-        this.arrow = "mdi-chevron-down";
-      }
-    },
+    /**
+     * Collect the value of input from the user.
+     */
     typePwd: function(value) {
       this.passcode += value;
     },
+    /**
+     * Reset the password
+     */
     reset() {
       this.passcode = "";
       this.shake = false;
     },
+    /**
+     * Check if the user enters the correct password.
+     * If success prompt and emit true to notify the parent components,
+     * else emit false.
+     */
     login() {
       if (this.passcode == this.randPwd) {
         this.snackbarColor = "success";
@@ -100,7 +104,7 @@ export default {
       setTimeout(function() {
         that.reset();
       }, 500);
-    }
+    },
   }
 };
 </script>
