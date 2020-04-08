@@ -1,5 +1,6 @@
 <template>
   <div class="email-test-content" align="center">
+    <!-- TEST FOR EMAIL SCENARIO -->
     <div class="title pt-6">Sign in to your Email</div>
     <div class="caption">Using emoji password</div>
     <div class="subtitle-2">Tries: {{tries}}</div>
@@ -16,7 +17,9 @@
     </div>
     <v-sheet height="2vh"></v-sheet>
     <v-btn text @click="bottomSheet = !bottomSheet">Check Log</v-btn>
-     <v-bottom-sheet v-model="bottomSheet" inset :scrollable="true">
+
+    <!-- LOGGING AREA -->
+    <v-bottom-sheet v-model="bottomSheet" inset :scrollable="true">
       <v-card height="350px">
         <v-card-title>
           <span class="title">Log Data:</span>
@@ -35,6 +38,9 @@
 import EmojiPwd from "@/components/EmojiPwd.vue";
 
 export default {
+  /**
+   * This component is for email test.
+   */
   components: {
     EmojiPwd
   },
@@ -48,11 +54,17 @@ export default {
     };
   },
   methods: {
+    /**
+     * check if the user inputs the correct
+     * password and log if it is successfull or not
+     */
     getUnlockValue(value) {
       //this.unlock = value;
       if (value === true) {
         this.logData.push(
-          `[${new Date(new Date().getTime() + (-new Date().getTimezoneOffset())*60*1000).toISOString()}]` +
+          `[${new Date(
+            new Date().getTime() + -new Date().getTimezoneOffset() * 60 * 1000
+          ).toISOString()}]` +
             ", " +
             this.userId +
             ", Email, TEST, Login successful"
@@ -68,7 +80,9 @@ export default {
         });
       } else {
         this.logData.push(
-          `[${new Date(new Date().getTime() + (-new Date().getTimezoneOffset())*60*1000).toISOString()}]` +
+          `[${new Date(
+            new Date().getTime() + -new Date().getTimezoneOffset() * 60 * 1000
+          ).toISOString()}]` +
             ", " +
             this.userId +
             ", Email, TEST, Login unsuccessful"
@@ -90,13 +104,13 @@ export default {
     },
     logAttempt() {
       this.logData.push(
-      `[${new Date(
-        new Date().getTime() + -new Date().getTimezoneOffset() * 60 * 1000
-      ).toISOString()}]` +
-        ", " +
-        this.userId +
-        ", " +
-        "Email, TEST, Start attempt"
+        `[${new Date(
+          new Date().getTime() + -new Date().getTimezoneOffset() * 60 * 1000
+        ).toISOString()}]` +
+          ", " +
+          this.userId +
+          ", " +
+          "Email, TEST, Start attempt"
       );
     }
   }

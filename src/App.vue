@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <!-- Navigation drawer on the side to generate new random password -->
     <v-navigation-drawer v-model="drawer" absolute temporary>
       <v-list-item>
         <v-list-item-content>
@@ -23,6 +24,7 @@
       </v-list>
     </v-navigation-drawer>
 
+    <!-- Used router-view to switch between different pages in vue -->
     <v-content>
       <v-icon @click.stop="drawer = !drawer" class="pa-5">mdi-menu</v-icon>
       <router-view />

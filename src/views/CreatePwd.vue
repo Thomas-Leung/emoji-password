@@ -1,5 +1,6 @@
 <template>
   <div class="create-pwd-content">
+    <!-- CREATE PASSWORD PAGE HEADER -->
     <v-sheet color="orange lighten-2" class="px-8 py-2">
       <v-row class="headline font-weight-medium">Emoji Password</v-row>
       <v-row class="font-weight-light body-2">
@@ -17,6 +18,7 @@
         <v-stepper-step step="3">Unlock Phone</v-stepper-step>
       </v-stepper-header>
 
+      <!-- CREATE PASSWORD FOR EMAIL -->
       <v-stepper-items class="pa-n8">
         <v-stepper-content step="1">
           <v-sheet>
@@ -41,6 +43,7 @@
           <v-btn text @click="bottomSheet = !bottomSheet">Check Log</v-btn>
         </v-stepper-content>
 
+        <!-- CREATE PASSWORD FOR BANKING -->
         <v-stepper-content step="2">
           <v-sheet>
             <h1 class="title font-weight-medium">Step 2: New password for Banking:</h1>
@@ -65,6 +68,7 @@
           <v-btn text @click="bottomSheet = !bottomSheet">Check Log</v-btn>
         </v-stepper-content>
 
+        <!-- CREATE PASSWORD FOR UNLOCKING PHONE -->
         <v-stepper-content step="3">
           <v-sheet>
             <h1 class="title font-weight-medium">Step 3: New password for phone:</h1>
@@ -91,6 +95,7 @@
       </v-stepper-items>
     </v-stepper>
 
+    <!-- LOGGING AREA -->
     <v-bottom-sheet v-model="bottomSheet" inset :scrollable="true">
       <v-card height="350px">
         <v-card-title>
@@ -104,6 +109,7 @@
       </v-card>
     </v-bottom-sheet>
 
+    <!-- SNACKBAR TO PROMPT USER -->
     <v-snackbar :color="snackbarColor" v-model="snackbar">
       {{ snackbarText }}
       <v-btn text @click="snackbar = false">Close</v-btn>
@@ -145,13 +151,43 @@ export default {
     };
   },
   methods: {
+    /**
+     * If user enters the correct password, 
+     * the user can go to the next step to create the next password.
+     */
     nextPage(nextPgNo) {
       if (this.unlock === true) {
         this.hidePwd = false; //reset value to false
         this.unlock = false; //reset value to false
         this.page = nextPgNo;
-        
+
         this.logs.push(
+          `[${new Date(
+            new Date().getTime() + -new Date().getTimezoneOffset() * 60 * 1000
+          ).toISOString()}]` +
+            ", " +
+            this.userId +
+            ", " +
+            this.scheme[this.page - 1] +
+            ", CREATE, Start attempt"
+        );
+      } else {
+        this.snackbarColor = "info";
+        this.snackbarText =
+          "You need to successfully enter the password to continue.";
+        this.snackbar = true;
+      }
+    },
+    /**
+     * Go back to the previous step for the previous password.
+     */
+    previousPage(prevPgNo) {
+      // minor bug: if you go 2 previous and move 2 pages forward,
+      // it will lock again.
+      this.page = prevPgNo;
+      this.unlock = true;
+
+      this.logs.push(
         `[${new Date(
           new Date().getTime() + -new Date().getTimezoneOffset() * 60 * 1000
         ).toISOString()}]` +
@@ -160,32 +196,12 @@ export default {
           ", " +
           this.scheme[this.page - 1] +
           ", CREATE, Start attempt"
-        );
-
-      } else {
-        this.snackbarColor = "info";
-        this.snackbarText =
-          "You need to successfully enter the password to continue.";
-        this.snackbar = true;
-      }
-    },
-    previousPage(prevPgNo) {
-      // minor bug: if you go 2 previous and move 2 pages forward,
-      // it will lock again.
-      this.page = prevPgNo;
-      this.unlock = true;
-
-      this.logs.push(
-      `[${new Date(
-        new Date().getTime() + -new Date().getTimezoneOffset() * 60 * 1000
-      ).toISOString()}]` +
-        ", " +
-        this.userId +
-        ", " +
-        this.scheme[this.page - 1] +
-        ", CREATE, Start attempt"
       );
     },
+    /**
+     * Navigate to the email test if user has created all passwords.
+     * Otherwise, prompt the user to create all passwords.
+     */
     navEmailTest() {
       if (this.unlock === true) {
         this.$router.push({
@@ -205,12 +221,19 @@ export default {
         this.snackbar = true;
       }
     },
+    /**
+     * Logging for user agent 
+     */
     logging() {
       let logData = `[${new Date(
         new Date().getTime() + -new Date().getTimezoneOffset() * 60 * 1000
       ).toISOString()}] UserAgentHeader: ${navigator.userAgent}`;
       this.logs.push(logData);
     },
+    /**
+     * Check if the user inputs the correct
+     * password and log if it is successfull or not.
+     */
     getUnlockValue(value) {
       this.unlock = value;
       if (value) {
@@ -237,6 +260,9 @@ export default {
         );
       }
     },
+    /**
+     * Generate random password for all password creation.
+     */
     generateRandomPwd(object) {
       let generatedPwd = "";
       let displayPwd = "";
@@ -254,6 +280,9 @@ export default {
       object.displayPwd = displayPwd;
       console.log(displayPwd);
     },
+    /**
+     * Generate random id for the user
+     */
     randId() {
       // prettier-ignore
       return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(2, 10);

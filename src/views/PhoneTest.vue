@@ -1,5 +1,6 @@
 <template>
   <div class="home" align="center">
+    <!-- TEST FOR UNLOCKING PHONE SCENARIO -->
     <Clock :unlock="unlock" @unlock="lock" />
     <v-sheet class="pa-4">
       <div class="caption">Tries: {{tries}}</div>
@@ -10,6 +11,8 @@
     </v-sheet>
     <v-sheet height="2vh"></v-sheet>
     <v-btn text @click="bottomSheet = !bottomSheet">Check Log</v-btn>
+
+    <!-- LOGGING AREA -->
     <v-bottom-sheet v-model="bottomSheet" inset :scrollable="true">
       <v-card height="350px">
         
@@ -36,6 +39,9 @@ import Clock from "@/components/Clock.vue";
 import EmojiPwd from "@/components/EmojiPwd.vue";
 
 export default {
+  /**
+   * This component is for unlocking a phone test.
+   */
   name: "Home",
   data: function() {
     return {
@@ -52,6 +58,12 @@ export default {
   },
   props: ["logData", "phonePass", "userId"],
   methods: {
+    /**
+     * Check if the user inputs the correct
+     * password and log if it is successfull or not.
+     * The test will end if the user input the 
+     * right password or failed to input after 3 tries.
+     */
     getUnlockValue(value) {
       this.unlock = value;
       if (value) {
@@ -82,6 +94,9 @@ export default {
     lock(value) {
       this.unlock = value;
     },
+    /**
+     * Export the logging content into CSV
+     */
     exportToCsv(filename, rows) {
       var processRow = function(row) {
         var finalVal = "";
@@ -129,6 +144,9 @@ export default {
         }
       }
     },
+    /**
+     * Send logging data to the server.
+     */
     sendLog(log) {
       fetch("http://134.117.132.238//logs.txt", {
         method: "post",
@@ -138,6 +156,9 @@ export default {
         body: JSON.stringify(log)
       });
     },
+    /**
+     * logging when user start input password
+     */
     logAttempt() {
       this.logData.push(
       `[${new Date(
